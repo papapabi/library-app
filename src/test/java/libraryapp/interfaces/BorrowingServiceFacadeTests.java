@@ -4,6 +4,9 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import libraryapp.domain.model.Book;
+import libraryapp.domain.model.BookCategory;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 public class BorrowingServiceFacadeTests
@@ -30,7 +33,18 @@ public class BorrowingServiceFacadeTests
 		 * category: Novel
 		 * copies: 9781409011446-1, 9781409011446-2
 		 */
-
+		Book theAffair = new Book.Builder("The Affair", "9781409011446-1")
+				.author("Lee Child")
+				.isbn10Number("1409011445")
+				.isbn13Number("9781409011446")
+				.category(BookCategory.NOVEL)
+				.build();
+		Book theAffair2 = new Book.Builder("The Affair", "9781409011446-2")
+				.author("Lee Child")
+				.isbn10Number("1409011445")
+				.isbn13Number("9781409011446")
+				.category(BookCategory.NOVEL)
+				.build();
 		/*
 		 * title: A Wanted Man
 		 * author: Lee Child
@@ -40,7 +54,12 @@ public class BorrowingServiceFacadeTests
 		 * category: Novel
 		 * copies: 9780373696062-1
 		 */
-
+		Book aWantedMan = new Book.Builder("A Wanted Man", "9780373696062-1")
+				.author("Lee Child")
+				.isbn10Number("037369606X")
+				.isbn13Number("9780373696062")
+				.category(BookCategory.NOVEL)
+				.build();
 		/*
 		 * title: Inferno
 		 * author: Dan Brown
@@ -50,7 +69,18 @@ public class BorrowingServiceFacadeTests
 		 * category: Novel
 		 * copies: 9780593075005-1, 9780593075005-2
 		 */
-
+		Book inferno = new Book.Builder("Inferno", "9780593075005-1")
+				.author("Dan Brown")
+				.isbn10Number("0593075005")
+				.isbn13Number("9780593075005")
+				.category(BookCategory.NOVEL)
+				.build();
+		Book inferno2 = new Book.Builder("Inferno", "9780593075005-2")
+				.author("Dan Brown")
+				.isbn10Number("0593075005")
+				.isbn13Number("9780593075005")
+				.category(BookCategory.NOVEL)
+				.build();
 		/*
 		 * title: The Lost Symbol
 		 * author: Dan Brown
@@ -60,7 +90,18 @@ public class BorrowingServiceFacadeTests
 		 * category: Novel
 		 * copies: 9780552170024-1, 9780552170024-2
 		 */
-
+		Book theLostSymbol = new Book.Builder("The Lost Symbol", "9780552170024-1")
+				.author("Dan Brown")
+				.isbn10Number("055217002X")
+				.isbn13Number("9780552170024")
+				.category(BookCategory.NOVEL)
+				.build();
+		Book theLostSymbol2 = new Book.Builder("The Lost Symbol", " 9780552170024-2")
+				.author("Dan Brown")
+				.isbn10Number("055217002X")
+				.isbn13Number("9780552170024")
+				.category(BookCategory.NOVEL)
+				.build();
 		/*
 		 * title: Diary of a Wimpy Kid
 		 * author: Jeff Kinney
@@ -70,7 +111,18 @@ public class BorrowingServiceFacadeTests
 		 * category: Comedy
 		 * copies: 9780141324906-1, 9780141324906-2
 		 */
-
+		Book diaryOfWimpyKid = new Book.Builder("Diary of a Wimpy Kid", "9780141324906-1")
+				.author("Jeff Kinney")
+				.isbn10Number("0141324902")
+				.isbn13Number("9780141324906-2")
+				.category(BookCategory.COMEDY)
+				.build();
+		Book diaryOfWimpyKid2 = new Book.Builder("Diary of a Wimpy Kid", "9780141324906-2")
+				.author("Jeff Kinney")
+				.isbn10Number("0141324902")
+				.isbn13Number("9780141324906-2")
+				.category(BookCategory.COMEDY)
+				.build();
 		/*
 		 * title: Advanced Grammar in Use
 		 * author: Martin Hewings
@@ -79,6 +131,23 @@ public class BorrowingServiceFacadeTests
 		 * category: Reference
 		 * copies: 9783125341470-1
 		 */
+		Book advancedGrammar = new Book.Builder("Advanced Grammar in Use", "9783125341470-1")
+				.author("Martin Hewings")
+				.isbn10Number("3125341477")
+				.isbn13Number("9783125341470")
+				.category(BookCategory.REFERENCE)
+				.build();
+		
+		entityManager.persist(theAffair);
+		entityManager.persist(theAffair2);
+		entityManager.persist(aWantedMan);
+		entityManager.persist(inferno);
+		entityManager.persist(inferno2);
+		entityManager.persist(theLostSymbol);
+		entityManager.persist(theLostSymbol2);
+		entityManager.persist(diaryOfWimpyKid);
+		entityManager.persist(diaryOfWimpyKid2);
+		entityManager.persist(advancedGrammar);
 	}
 
 	@Override

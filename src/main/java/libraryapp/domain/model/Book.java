@@ -1,20 +1,36 @@
 package libraryapp.domain.model;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import java.time.Month;
+import java.time.YearMonth;
+import javax.persistence.*;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
+@Entity
 public class Book {
-	// ID
-	private final String barcode;
+	private static final Book NONE = new Book.Builder("N/A", "N/A").build();
+	private static final String NIL_ISBN = "ISBN not available.";
 	
-	private final String title;
-	private final String author;
+	@Id private String barcode;
+	@Basic private String title;
+	private String author;
 	private boolean reserved;
-	private final String isbn10;
-	private final String isbn13;
-	private final BookCategory category;
+	private String isbn10;
+	private String isbn13;
+	@Enumerated(EnumType.STRING)
+	private BookCategory category;
+	
+	@org.hibernate.annotations.Columns(columns={
+			@Column(name="month", nullable=false, length=2),
+			@Column(name="year", nullable=false, length=2)
+			})
+	private YearMonth datePublished;
+	
+	public Book() {
+		
+	}
 	
 	@Override
 	public boolean equals(Object o) {
@@ -24,7 +40,8 @@ public class Book {
 	     
 	     Book rhs = (Book) o;
 	     return new EqualsBuilder().
-	    		 append(barcode, rhs.barcode).isEquals();
+	    		 append(barcode, rhs.barcode).
+	    		 isEquals();
 	}
 	
 	@Override
@@ -32,27 +49,66 @@ public class Book {
 		return Objects.hashCode(barcode);
 	}
 	
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this)
+		.add("Barcode", this.barcode)
+		.add("Title", this.title)
+		.add("Author", this.author)
+		.add("Reserved?", this.reserved)
+		.toString();
+	}
+	
+	public boolean isReserved() {
+		return reserved;
+	}
+
+	public void setReserved(boolean reserved) {
+		this.reserved = reserved;
+	}
+
+	public String getBarcode() {
+		return barcode;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public String getIsbn10() {
+		return isbn10;
+	}
+
+	public String getIsbn13() {
+		return isbn13;
+	}
+
+	public BookCategory getCategory() {
+		return category;
+	}
+
 	public static class Builder {
 		private final String title;
+		private final String barcode;
 		
-		private String author;
-		private String barcode;
-		private boolean reserved;
-		private String isbn10;
-		private String isbn13;
-		private BookCategory category;
+		private String author = "N/A";
+		private boolean reserved = false;
+		private String isbn10 = Book.NIL_ISBN;
+		private String isbn13 = Book.NIL_ISBN;
+		private BookCategory category = BookCategory.NONE;
+		private YearMonth datePublished = YearMonth.of(2016, Month.JANUARY);
 		
-		public Builder(String title) {
+		public Builder(String title, String barcode) {
 			this.title = title;
+			this.barcode = barcode;
 		}
 		
 		public Builder author(String author) {
 			this.author = author;
-			return this;
-		}
-		
-		public Builder barcode(String barcode) {
-			this.barcode = barcode;
 			return this;
 		}
 		
@@ -76,18 +132,24 @@ public class Book {
 			return this;
 		}
 		
+		public Builder datePublished(YearMonth datePublished) {
+			this.datePublished = datePublished;
+			return this;
+		}
+		
 		public Book build() {
 			return new Book(this);
 		}	
 	} // end static Builder
 	
 	private Book(Builder builder) {
+		this.barcode = builder.barcode;
 		this.title = builder.title;
 		this.author = builder.author;
-		this.barcode = builder.barcode;
 		this.reserved = builder.reserved;
 		this.isbn10 = builder.isbn10;
 		this.isbn13 = builder.isbn13;
 		this.category = builder.category;
+		this.datePublished = builder.datePublished;
 	}
 }

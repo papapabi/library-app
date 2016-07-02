@@ -1,14 +1,18 @@
 package libraryapp.domain.model;
 
 import java.util.List;
+import javax.persistence.*;
 
-public class User {
+@Entity
+public class Account {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long memberAccountId;
 	private int loanLimit;
 	private MemberCategory category;
-	//private Department department;
 	
+	@Transient
 	private List<Book> borrowedBooks;
 	
 	public void borrow(Book b) {
