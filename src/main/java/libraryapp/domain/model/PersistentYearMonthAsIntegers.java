@@ -36,9 +36,9 @@ public class PersistentYearMonthAsIntegers implements CompositeUserType {
 		switch(propertyIndex) {
 		case 0: 
 			// first attribute in column is the month, so return it at index 0
-			yearMonth.getMonthValue();
+			return yearMonth.getMonthValue();
 		case 1:
-			yearMonth.getYear();
+			return yearMonth.getYear();
 		default:
 			// otherwise, an exception is thrown
 			throw new HibernateException(

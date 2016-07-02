@@ -24,7 +24,7 @@ public class Book {
 	
 	@org.hibernate.annotations.Columns(columns={
 			@Column(name="month", nullable=false, length=2),
-			@Column(name="year", nullable=false, length=2)
+			@Column(name="year", nullable=false, length=4)
 			})
 	private YearMonth datePublished;
 	
