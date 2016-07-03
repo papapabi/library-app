@@ -8,11 +8,12 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
-@Entity
+@Entity // creates a table named "Book"
 public class Book {
 	private static final Book NONE = new Book.Builder("N/A", "N/A").build();
 	private static final String NIL_ISBN = "ISBN not available.";
 	
+	// the columns of table "Book" are as follows, with no modifications to their names
 	@Id private String barcode;
 	@Basic private String title;
 	private String author;
@@ -21,6 +22,8 @@ public class Book {
 	private String isbn13;
 	@Enumerated(EnumType.STRING)
 	private BookCategory category;
+	@Version
+	private Integer version;
 	
 	@org.hibernate.annotations.Columns(columns={
 			@Column(name="month", nullable=false, length=2),
@@ -89,6 +92,14 @@ public class Book {
 
 	public BookCategory getCategory() {
 		return category;
+	}
+	
+	public Integer getVersion() {
+		return version;
+	}
+	
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 
 	public static class Builder {
